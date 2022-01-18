@@ -1,4 +1,4 @@
-using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace Dominio.Entidades
 {
@@ -39,8 +39,8 @@ namespace Dominio.Entidades
         private void ValidarValor(string valor)
         {
             if (string.IsNullOrWhiteSpace(valor) ||
-                valor.Any(x => !char.IsDigit(x)) ||
-                valor.Length != 9
+                valor.Length != 9 ||
+                !Regex.IsMatch(valor, ("[0-9]{5}-[0-9]{3}"))
                 )
             {
                 AdicionarMensagem("Valor do CEP inválido");
