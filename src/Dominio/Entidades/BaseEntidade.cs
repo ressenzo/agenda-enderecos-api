@@ -12,7 +12,7 @@ namespace Dominio.Entidades
         {
             get
             {
-                return Mensagens.Count > 0;
+                return Mensagens.Count == 0;
             }
         }
 
