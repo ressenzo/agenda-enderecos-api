@@ -20,5 +20,13 @@ namespace Dominio.Entidades
         {
             Mensagens.Add(mensagem);
         }
+
+        protected void ValidarString(string valor, string mensagem)
+        {
+            if (string.IsNullOrWhiteSpace(valor))
+            {
+                AdicionarMensagem(mensagem);
+            }
+        }  
     }
 }

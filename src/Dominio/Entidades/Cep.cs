@@ -26,7 +26,7 @@ namespace Dominio.Entidades
             ValidarString(logradouro, "Logradouro do CEP inválido.");
             ValidarString(bairro, "Bairro do CEP inválido.");
             ValidarString(cidade, "Cidade do CEP inválido.");
-            ValidarString(uf, "Uf do CEP inválido.");
+            ValidarString(uf, "UF do CEP inválido.");
 
             Valor = valor;
             Nome = nome;
@@ -45,14 +45,6 @@ namespace Dominio.Entidades
             {
                 AdicionarMensagem("Valor do CEP inválido");
             }
-        }      
-
-        private void ValidarString(string valor, string mensagem)
-        {
-            if (string.IsNullOrWhiteSpace(valor))
-            {
-                AdicionarMensagem(mensagem);
-            }
-        }  
+        }
     }
 }
