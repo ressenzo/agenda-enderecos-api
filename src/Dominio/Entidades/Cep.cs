@@ -43,7 +43,7 @@ namespace Dominio.Entidades
                 !Regex.IsMatch(valor, ("[0-9]{5}-[0-9]{3}"))
                 )
             {
-                AdicionarMensagem("Valor do CEP inválido");
+                AdicionarMensagem("Valor do CEP inválido.");
             }
         }
     }
