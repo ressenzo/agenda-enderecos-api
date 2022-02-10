@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\IoC\IoC.csproj" />
+    <ProjectReference Include="..\Dominio\Dominio.csproj" />
   </ItemGroup>
 
 </Project>
