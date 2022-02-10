@@ -7,16 +7,19 @@ using System.Collections.Generic;
 using Dominio.Entidades;
 using Microsoft.AspNetCore.Mvc;
 using Api.Models;
+using AutoMapper;
 
 namespace Testes.Controllers
 {
     public class CepControllerTeste
     {
         private readonly Mock<ICepRepositorio> _cepRepositorio;
+        private readonly Mock<IMapper> _mapper;
 
         public CepControllerTeste()
         {
             _cepRepositorio = new Mock<ICepRepositorio>();
+            _mapper = new Mock<IMapper>();
         }
 
         [Fact]
@@ -41,7 +44,7 @@ namespace Testes.Controllers
             var resultadoOk = resultado as OkObjectResult;
             Assert.NotNull(resultadoOk);
             
-            var objetoRetornado = resultadoOk.Value as RetornoListaModel;
+            var objetoRetornado = resultadoOk.Value as RetornoCepsPorUsuarioModel;
             Assert.Equal(cepsParaRetornar.Count, objetoRetornado.Tamanho);
         }
 
@@ -49,7 +52,9 @@ namespace Testes.Controllers
         {
             get
             {
-                return new CepController(_cepRepositorio.Object);
+                return new CepController(_cepRepositorio.Object,
+                    _mapper.Object
+                );
             }
         }
     }

@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using IoC;
+using Api.Assemblies;
 
 namespace Api
 {
@@ -27,6 +28,7 @@ namespace Api
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Api", Version = "v1" });
             });
 
+            services.AddAutoMapper(AssemblyUtil.Assemblies());
             services.AdicionarDependencias();
         }
 

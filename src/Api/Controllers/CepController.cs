@@ -2,6 +2,10 @@ using System.Threading.Tasks;
 using Dominio.Repositorios;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
+using AutoMapper;
+using System.Collections.Generic;
+using Dominio.Entidades;
+using Api.Models;
 
 namespace Api.Controllers
 {
@@ -10,10 +14,14 @@ namespace Api.Controllers
     public class CepController : BaseController
     {
         private readonly ICepRepositorio _cepRepositorio;
+        private readonly IMapper _mapper;
 
-        public CepController(ICepRepositorio cepRepositorio)
+        public CepController(ICepRepositorio cepRepositorio,
+            IMapper mapper
+        )
         {
             _cepRepositorio = cepRepositorio;
+            _mapper = mapper;
         }
 
         [HttpGet("{idUsuario}")]
@@ -21,7 +29,9 @@ namespace Api.Controllers
         {
             var ceps = await _cepRepositorio.ObterCepsPorUsuario(idUsuario);
 
-            return RetornarListaOk(ceps);
+            var resultado = _mapper.Map<IEnumerable<Cep>, IEnumerable<RetornoCepModel>>(ceps);
+
+            return Ok(new { ceps = resultado, tamanho = resultado.Count() });
         }
     }
 }
