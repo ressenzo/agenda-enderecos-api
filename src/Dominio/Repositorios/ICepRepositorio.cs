@@ -6,6 +6,6 @@ namespace Dominio.Repositorios
 {
     public interface ICepRepositorio
     {
-        Task<IEnumerable<Cep>> ObterCeps();
+        Task<IEnumerable<Cep>> ObterCepsPorUsuario(string idUsuario);
     }
 }
