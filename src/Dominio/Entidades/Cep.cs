@@ -12,13 +12,15 @@ namespace Dominio.Entidades
         public string Bairro { get; private set; }
         public string Cidade { get; private set; }
         public string Uf { get; private set; }
+        public string IdUsuario { get; private set; }
 
         public Cep(string valor,
             string nome,
             string logradouro,        
             string bairro,
             string cidade,
-            string uf
+            string uf,
+            string idUsuario
             )
         {
             ValidarValor(valor);
@@ -27,6 +29,7 @@ namespace Dominio.Entidades
             ValidarString(bairro, "Bairro do CEP inválido.");
             ValidarString(cidade, "Cidade do CEP inválido.");
             ValidarString(uf, "UF do CEP inválido.");
+            ValidarString(idUsuario, "Id do Usuário inválido");
 
             Valor = valor;
             Nome = nome;
@@ -34,6 +37,7 @@ namespace Dominio.Entidades
             Bairro = bairro;
             Cidade = cidade;
             Uf = uf;
+            IdUsuario = idUsuario;
         }
 
         private void ValidarValor(string valor)
