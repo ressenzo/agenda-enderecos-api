@@ -2,15 +2,11 @@ namespace Api.Models
 {
     public class RetornoListaModel
     {
-        public object Valor { get; }
-        public int Tamanho { get; set; }
+        public int Tamanho { get; set; } = 0;
 
-        public RetornoListaModel(object valor,
-            int tamanho
-        )
+        protected void AdicionarTamanho()
         {
-            Valor = valor;
-            Tamanho = tamanho;
+            Tamanho++;
         }
     }
 }

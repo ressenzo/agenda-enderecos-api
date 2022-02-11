@@ -29,9 +29,16 @@ namespace Api.Controllers
         {
             var ceps = await _cepRepositorio.ObterCepsPorUsuario(idUsuario);
 
-            var resultado = _mapper.Map<IEnumerable<Cep>, IEnumerable<RetornoCepModel>>(ceps);
+            var cepsConvertidos = _mapper.Map<IEnumerable<RetornoCepModel>>(ceps);
 
-            return Ok(new { ceps = resultado, tamanho = resultado.Count() });
+            var resultado = new RetornoCepsPorUsuarioModel();
+
+            foreach (var cep in cepsConvertidos)
+            {
+                resultado.AdicionarCep(cep);
+            }
+
+            return Ok(resultado);
         }
     }
 }

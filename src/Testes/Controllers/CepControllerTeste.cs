@@ -26,14 +26,21 @@ namespace Testes.Controllers
         public async Task CepsEncontrados_ListaComCepsEOk()
         {
             // Arrange
-            var cepsParaRetornar = new List<Cep>
+            var cepsRetornoRepositorio = new List<Cep>
             {
                 new Cep("12345-678", "Nome 1", "Logradouro 1", "Bairro 1", "Cidade 1", "UF 1", "123456"),
                 new Cep("87654-321", "Nome 2", "Logradouro 2", "Bairro 2", "Cidade 2", "UF 2", "123456")
             };
+            var cepsRetornoMapper = new List<RetornoCepModel>
+            {
+                new RetornoCepModel { Bairro = "Bairro 1" },
+                new RetornoCepModel { Bairro = "Bairro 2" }
+            };
             var controller = Controller;
             _cepRepositorio.Setup(x => x.ObterCepsPorUsuario(It.IsAny<string>()))
-                .ReturnsAsync(cepsParaRetornar);
+                .ReturnsAsync(cepsRetornoRepositorio);
+            _mapper.Setup(x => x.Map<IEnumerable<RetornoCepModel>>(It.IsAny<IEnumerable<Cep>>()))
+                .Returns(cepsRetornoMapper);
 
             // Act
             var resultado = await controller.ObterCepsPorUsuario(It.IsAny<string>());
@@ -45,7 +52,7 @@ namespace Testes.Controllers
             Assert.NotNull(resultadoOk);
             
             var objetoRetornado = resultadoOk.Value as RetornoCepsPorUsuarioModel;
-            Assert.Equal(cepsParaRetornar.Count, objetoRetornado.Tamanho);
+            Assert.Equal(cepsRetornoRepositorio.Count, objetoRetornado.Tamanho);
         }
 
         private CepController Controller
