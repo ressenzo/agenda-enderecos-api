@@ -10,5 +10,12 @@ namespace Api.Controllers
         {
             return BadRequest(new RetornoErroModel(mensagens));
         }
+
+        protected IActionResult RetornarErroInterno(string erro)
+        {
+            var erros = new List<string>();
+            erros.Add(erro);
+            return StatusCode(500, new RetornoErroModel(erros));
+        }
     }
 }

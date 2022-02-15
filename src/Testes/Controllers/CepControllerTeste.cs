@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Api.Models;
 using AutoMapper;
 using System.Linq;
+using System;
 
 namespace Testes.Controllers
 {
@@ -92,6 +93,28 @@ namespace Testes.Controllers
             
             var resultadoNoContent = resultado as NoContentResult;
             Assert.NotNull(resultadoNoContent);
+        }
+
+        [Fact]
+        public async Task ErroInterno_InternalServerError()
+        {
+            // Arrange
+            var controller = Controller;
+            _cepRepositorio.Setup(x => x.ObterCepsPorUsuario(It.IsAny<string>()))
+                .ThrowsAsync(new Exception("Erro de banco de dados"));
+
+            // Act
+            var resultado = await controller.ObterCepsPorUsuario("123456");
+            
+            // Assert
+            Assert.IsType<ObjectResult>(resultado);
+            
+            var resultadoObjeto = resultado as ObjectResult;
+            Assert.NotNull(resultadoObjeto);
+            Assert.Equal(500, resultadoObjeto.StatusCode);
+            
+            var objetoRetornado = resultadoObjeto.Value as RetornoErroModel;
+            Assert.Equal(1, objetoRetornado.Erros.Count());
         }
 
         private CepController Controller

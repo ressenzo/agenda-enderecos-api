@@ -6,6 +6,7 @@ using AutoMapper;
 using System.Collections.Generic;
 using Dominio.Entidades;
 using Api.Models;
+using System;
 
 namespace Api.Controllers
 {
@@ -27,24 +28,32 @@ namespace Api.Controllers
         [HttpGet("{idUsuario}")]
         public async Task<IActionResult> ObterCepsPorUsuario(string idUsuario)
         {
-            if (string.IsNullOrWhiteSpace(idUsuario))
+            try
             {
-                var erros = new List<string>()
+                if (string.IsNullOrWhiteSpace(idUsuario))
                 {
-                    "IdUsuario inválido"
-                };
+                    var erros = new List<string>()
+                    {
+                        "IdUsuario inválido"
+                    };
 
-                return RetornarBadRequest(erros);
+                    return RetornarBadRequest(erros);
+                }
+
+                var ceps = await _cepRepositorio.ObterCepsPorUsuario(idUsuario);
+
+                if (ceps == null || ceps.Count() == 0)
+                {
+                    return NoContent();
+                }
+
+                return RetornarCepsPorUsuario(ceps);
             }
-
-            var ceps = await _cepRepositorio.ObterCepsPorUsuario(idUsuario);
-
-            if (ceps == null || ceps.Count() == 0)
+            catch
             {
-                return NoContent();
+                // LogarErro(excecao.Message);
+                return RetornarErroInterno("Ocorreu um erro interno ao obter CEPs do usuário");
             }
-
-            return RetornarCepsPorUsuario(ceps);
         }
 
         private IActionResult RetornarCepsPorUsuario(IEnumerable<Cep> ceps)
