@@ -39,6 +39,16 @@ namespace Api.Controllers
 
             var ceps = await _cepRepositorio.ObterCepsPorUsuario(idUsuario);
 
+            if (ceps == null || ceps.Count() == 0)
+            {
+                return NoContent();
+            }
+
+            return RetornarCepsPorUsuario(ceps);
+        }
+
+        private IActionResult RetornarCepsPorUsuario(IEnumerable<Cep> ceps)
+        {
             var cepsConvertidos = _mapper.Map<IEnumerable<RetornoCepModel>>(ceps);
 
             var resultado = new RetornoCepsPorUsuarioModel();

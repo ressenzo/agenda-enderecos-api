@@ -78,6 +78,22 @@ namespace Testes.Controllers
             Assert.Equal(1, objetoRetornado.Erros.Count());
         }
 
+        [Fact]
+        public async Task CepsNaoEncontrados_NoContent()
+        {
+            // Arrange
+            var controller = Controller;
+
+            // Act
+            var resultado = await controller.ObterCepsPorUsuario("123456");
+
+            //Assert
+            Assert.IsType<NoContentResult>(resultado);
+            
+            var resultadoNoContent = resultado as NoContentResult;
+            Assert.NotNull(resultadoNoContent);
+        }
+
         private CepController Controller
         {
             get
