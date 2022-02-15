@@ -27,6 +27,16 @@ namespace Api.Controllers
         [HttpGet("{idUsuario}")]
         public async Task<IActionResult> ObterCepsPorUsuario(string idUsuario)
         {
+            if (string.IsNullOrWhiteSpace(idUsuario))
+            {
+                var erros = new List<string>()
+                {
+                    "IdUsuario inválido"
+                };
+
+                return RetornarBadRequest(erros);
+            }
+
             var ceps = await _cepRepositorio.ObterCepsPorUsuario(idUsuario);
 
             var cepsConvertidos = _mapper.Map<IEnumerable<RetornoCepModel>>(ceps);

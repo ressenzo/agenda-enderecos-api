@@ -8,6 +8,7 @@ using Dominio.Entidades;
 using Microsoft.AspNetCore.Mvc;
 using Api.Models;
 using AutoMapper;
+using System.Linq;
 
 namespace Testes.Controllers
 {
@@ -43,7 +44,7 @@ namespace Testes.Controllers
                 .Returns(cepsRetornoMapper);
 
             // Act
-            var resultado = await controller.ObterCepsPorUsuario(It.IsAny<string>());
+            var resultado = await controller.ObterCepsPorUsuario("123456");
 
             // Assert
             Assert.IsType<OkObjectResult>(resultado);
@@ -53,6 +54,28 @@ namespace Testes.Controllers
             
             var objetoRetornado = resultadoOk.Value as RetornoCepsPorUsuarioModel;
             Assert.Equal(cepsRetornoRepositorio.Count, objetoRetornado.Tamanho);
+        }
+
+        [Theory]
+        [InlineData(" ")]
+        [InlineData("")]
+        [InlineData(null)]
+        public async Task IdUsuarioInvalido_BadRequest(string idUsuario)
+        {
+            // Arrange
+            var controller = Controller;
+
+            // Act
+            var resultado = await controller.ObterCepsPorUsuario(idUsuario);
+
+            //Assert
+            Assert.IsType<BadRequestObjectResult>(resultado);
+            
+            var resultadoBadRequest = resultado as BadRequestObjectResult;
+            Assert.NotNull(resultadoBadRequest);
+            
+            var objetoRetornado = resultadoBadRequest.Value as RetornoErroModel;
+            Assert.Equal(1, objetoRetornado.Erros.Count());
         }
 
         private CepController Controller
