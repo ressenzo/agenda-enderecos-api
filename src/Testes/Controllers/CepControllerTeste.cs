@@ -76,7 +76,7 @@ namespace Testes.Controllers
             Assert.NotNull(resultadoBadRequest);
             
             var objetoRetornado = resultadoBadRequest.Value as RetornoErroModel;
-            Assert.Equal(1, objetoRetornado.Erros.Count());
+            Assert.Single(objetoRetornado.Erros);
         }
 
         [Fact]
@@ -114,7 +114,7 @@ namespace Testes.Controllers
             Assert.Equal(500, resultadoObjeto.StatusCode);
             
             var objetoRetornado = resultadoObjeto.Value as RetornoErroModel;
-            Assert.Equal(1, objetoRetornado.Erros.Count());
+            Assert.Single(objetoRetornado.Erros);
         }
 
         private CepController Controller

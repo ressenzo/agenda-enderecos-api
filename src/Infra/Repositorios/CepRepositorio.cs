@@ -18,6 +18,11 @@ namespace Infra.Repositorios
             return Task.Run(() => CepsFake.Append(cep));
         }
 
+        public Task<Cep> ObterCepPorUsuario(string idUsuario, string valorCep)
+        {
+            return Task.Run(() => CepsFake.FirstOrDefault(x => x.IdUsuario == idUsuario && x.Valor == valorCep));
+        }
+
         private IEnumerable<Cep> CepsFake
         {
             get
