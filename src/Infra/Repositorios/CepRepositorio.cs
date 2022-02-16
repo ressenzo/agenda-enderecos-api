@@ -13,6 +13,11 @@ namespace Infra.Repositorios
             return Task.Run(() => CepsFake.Where(x => x.IdUsuario == idUsuario));
         }
 
+        public Task AdicionarCep(Cep cep)
+        {
+            return Task.Run(() => CepsFake.Append(cep));
+        }
+
         private IEnumerable<Cep> CepsFake
         {
             get
@@ -20,7 +25,8 @@ namespace Infra.Repositorios
                 return new Cep[]
                 {
                     new Cep("12345-678", "Nome 1", "Logradouro 1", "Bairro 1", "Cidade 1", "UF 1", "123456"),
-                    new Cep("87654-321", "Nome 2", "Logradouro 2", "Bairro 2", "Cidade 2", "UF 2", "123456")
+                    new Cep("87654-321", "Nome 2", "Logradouro 2", "Bairro 2", "Cidade 2", "UF 2", "123456"),
+                    new Cep("12345-678", "Nome 2", "Logradouro 2", "Bairro 2", "Cidade 2", "UF 2", "654321")
                 };
             }
         }

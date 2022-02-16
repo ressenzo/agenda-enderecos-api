@@ -6,7 +6,6 @@ using AutoMapper;
 using System.Collections.Generic;
 using Dominio.Entidades;
 using Api.Models;
-using System;
 
 namespace Api.Controllers
 {

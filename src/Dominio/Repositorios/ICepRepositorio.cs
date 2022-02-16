@@ -7,5 +7,7 @@ namespace Dominio.Repositorios
     public interface ICepRepositorio
     {
         Task<IEnumerable<Cep>> ObterCepsPorUsuario(string idUsuario);
+
+        Task AdicionarCep(Cep cep);
     }
 }
