@@ -6,7 +6,7 @@ namespace Dominio.Entidades
     {
         public int Id { get; set; }
 
-        private List<string> Mensagens { get; set; } = new List<string>();
+        public List<string> Mensagens { get; private set; } = new List<string>();
 
         public bool Valida
         {
